@@ -1,3 +1,7 @@
+---
+layout: default
+title: Container and Child Controllers
+---
 # Container Controllers
 
 Historically, iOS developers have been limited to just two batteries-included ways of organizing their apps: `UINavigationController`s and `UITabBarController`s. These are `UIViewController`s, but are unique in that they organize other `UIViewController`s as part of their content. Prior to iOS5, there was no formal way of doing the same in a custom manner; you could either manage your own view controller relationships or use one mega-controller with a complex view hierarchy. But what about today, *after* iOS5?
@@ -71,18 +75,32 @@ We do some nice checks in `#pop` to make sure we don't pop to an empty stack. I 
 
 Next on our list, we need to add the `UIViewController` methods for adding child controllers (say that five times fast). They are:
 
-*Adding children**
-- `to_vc.willMoveToParentViewController(container)`
-- `container.addChildViewController(to_vc)`
-- `to_vc.didMoveToParentViewController(container)`
+###### Adding Children
 
-**Removing children**
-- `from_vc.willMoveToParentViewController(nil)`
-- `from_vc.removeFromParentViewController`
-- `from_vc.didMoveToParentViewController(nil)`
+```ruby
+to_vc.willMoveToParentViewController(container)
+container.addChildViewController(to_vc)
+to_vc.didMoveToParentViewController(container)
+```
 
-**Both**
-- `container.transitionFromViewController(from_vc, toViewController:to_vc, duration:time, options:Some | Options, animations: lambda { }, completion: lambda {|finished| })`
+###### Removing children
+
+```ruby
+from_vc.willMoveToParentViewController(nil)
+from_vc.removeFromParentViewController
+from_vc.didMoveToParentViewController(nil)
+```
+
+###### Both
+
+```ruby
+container.transitionFromViewController(from_vc,
+              toViewController:to_vc,
+              duration:0.3,
+              options:UIViewAnimationOptionTransitionNone
+              animations:lambda {}
+              completion:lambda {|finished|})
+```
 
 In practice, `addChildViewController` calls `willMoveToParentViewController(container)` and  `removeFromParentViewController` calls `didMoveToParentViewController(nil)`, so you only need to use four of those in your implementation (this doesn't happen if you override `automaticallyForwardAppearanceAndRotationMethodsToChildViewControllers`, but let's ignore that for now).
 
