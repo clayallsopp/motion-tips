@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Container and Child Controllers
+has_footer: true
 ---
 # Container Controllers
 
@@ -179,5 +180,3 @@ Next we handle what happens to their `view`s. Remember to call the `view[Will/Di
 And that's about all you need! Just plug in your custom animations or chrome and you're good to go.
 
 I've uploaded a more complete example [here](http://google.com). It's fugly, but shows how to do some animations and lock a navigation bar to the container's `view`.
-
-Thanks!
